@@ -6,7 +6,7 @@ export default function ProjectList() {
   return (
     <div className="mt-4 space-y-2">
       {state.projects.map(p => (
-        <div key={p.id} className="p-4 bg-white shadow rounded flex justify-between items-center">
+        <div key={p.id} className="p-4 bg-white shadow-lg rounded-lg flex justify-between items-center">
           <div>
             <h3 className="font-bold">{p.title}</h3>
             <p>Status: {p.status}</p>

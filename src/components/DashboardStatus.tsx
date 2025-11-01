@@ -6,7 +6,7 @@ export default function DashboardStatus() {
   const paidProjects = state.projects.filter(p => p.paymentStatus === "paid").length;
 
   return (
-    <div className="p-4 bg-white shadow rounded mt-4">
+    <div className="p-4 bg-white shadow-lg rounded-lg mt-4">
       <h2 className="text-xl font-bold mb-2">Dashboard</h2>
       <p>Total Clients: {state.clients.length}</p>
       <p>Total Projects: {totalProjects}</p>
