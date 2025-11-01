@@ -8,22 +8,12 @@ interface Props {
 
 export default function ProjectList({ projects, markPaid }: Props) {
   return (
-    <ul className="space-y-2">
+    <ul>
       {projects.map(p => (
-        <li key={p.id} className="flex justify-between items-center border p-2 rounded bg-white shadow">
-          <div>
-            <p className="font-bold">{p.title} - ${p.budget}</p>
-            <p className="text-gray-500 text-sm">
-              Status: {p.status}, Payment: {p.paymentStatus === "paid" ? "✅ Paid" : "❌ Unpaid"}
-            </p>
-          </div>
+        <li key={p.id}>
+          {p.title} - {p.status} - {p.paymentStatus}
           {p.paymentStatus === "unpaid" && (
-            <button 
-              className="bg-red-800 text-white px-2 rounded" 
-              onClick={() => markPaid(p.id)}
-            >
-              Mark Paid
-            </button>
+            <button onClick={() => markPaid(p.id)}>Mark Paid</button>
           )}
         </li>
       ))}
