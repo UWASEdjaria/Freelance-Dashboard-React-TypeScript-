@@ -1,17 +1,16 @@
 
-import { AppContext } from "../context";
+import { useAppContext } from "../context";
 
 export default function ProjectList() {
-  const ctx = useContext(AppContext);
-  if (!ctx) return null;
+  const { state, dispatch } = useAppContext();
 
   const markPaid = (id: string) => {
-    ctx.dispatch({ type: "MARK_PAID", projectId: id });
+    dispatch({ type: "MARK_PROJECT_PAID", projectId: id });
   };
 
   return (
     <div className="mt-4 space-y-2">
-      {ctx.state.projects.map(p => (
+      {state.projects.map((p: { id: string; title: string; status: string; paymentStatus: string }) => (
         <div key={p.id} className="p-4 bg-white shadow rounded flex justify-between items-center">
           <div>
             <h3 className="font-bold">{p.title}</h3>
