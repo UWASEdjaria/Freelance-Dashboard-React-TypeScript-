@@ -1,16 +1,11 @@
-
 import { useAppContext } from "../context";
 
 export default function ProjectList() {
   const { state, dispatch } = useAppContext();
 
-  const markPaid = (id: string) => {
-    dispatch({ type: "MARK_PROJECT_PAID", projectId: id });
-  };
-
   return (
     <div className="mt-4 space-y-2">
-      {state.projects.map((p: { id: string; title: string; status: string; paymentStatus: string }) => (
+      {state.projects.map(p => (
         <div key={p.id} className="p-4 bg-white shadow rounded flex justify-between items-center">
           <div>
             <h3 className="font-bold">{p.title}</h3>
@@ -20,7 +15,7 @@ export default function ProjectList() {
           {p.paymentStatus === "unpaid" && (
             <button 
               className="bg-red-700 text-white px-3 py-1 rounded"
-              onClick={() => markPaid(p.id)}
+              onClick={() => dispatch({ type: "MARK_PROJECT_PAID", projectId: p.id })}
             >
               Mark Paid
             </button>

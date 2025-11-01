@@ -1,11 +1,9 @@
-
 import { useAppContext } from "../context";
 
 export default function DashboardStatus() {
   const { state } = useAppContext();
-
   const totalProjects = state.projects.length;
-  const paidProjects = state.projects.filter((p: { paymentStatus: string }) => p.paymentStatus === "paid").length;
+  const paidProjects = state.projects.filter(p => p.paymentStatus === "paid").length;
 
   return (
     <div className="p-4 bg-white shadow rounded mt-4">
