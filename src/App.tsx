@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes , Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import DashboardStatus from "./components/DashboardStatus";
 import ClientCard from "./components/ClientCard";
-import ProjectList from "./components/ProjectList ";
+import ProjectList from "./components/ProjectList";
 
 
 

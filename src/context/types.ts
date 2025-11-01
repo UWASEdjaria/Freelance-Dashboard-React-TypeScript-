@@ -1,5 +1,4 @@
 export interface Client{
-
 id: string
 name: string
 country: string
@@ -8,7 +7,6 @@ email?: string
 }
 
 export interface Project{
-
 id: string
 clientId: string
 title: string
@@ -19,7 +17,6 @@ paymentStatus: "paid" | "unpaid"
 }
 
 export interface Payment{
-
 projectId: string
 amount: number
 date: string
