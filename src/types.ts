@@ -30,4 +30,4 @@ export type AppAction =
   | { type: 'ADD_CLIENT'; payload: Client }
   | { type: 'ADD_PROJECT'; payload: Project }
   | { type: 'ADD_PAYMENT'; payload: Payment }
-  | { type: 'MARK_PROJECT_PAID'; projectId: string };
+  | { type: 'MARK_PROJECT_PAID'; payload: string };
