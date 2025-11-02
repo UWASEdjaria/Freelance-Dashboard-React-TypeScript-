@@ -1,66 +1,60 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { useAppContext } from "../context";
-import SearchBar from './SearchBar';
+import SearchBar from "./SearchBar";
 
 export default function ProjectList() {
   const { state, dispatch } = useAppContext();
-  const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [t, setT] = useState(""); // search text
+  const [f, setF] = useState("all"); // filter
 
-  const filteredProjects = state.projects
-    .filter(p => 
-      p.title.toLowerCase().includes(search.toLowerCase()) ||
-      state.clients.find(c => c.id === p.clientId)?.name.toLowerCase().includes(search.toLowerCase())
-    )
-    .filter(p => statusFilter === 'all' || p.status === statusFilter);
+  // Filter projects
+  const list = state.projects.filter(p => {
+    const c = state.clients.find(c => c.id === p.clientId)?.name || "";
+    return (p.title + c).toLowerCase().includes(t.toLowerCase()) && (f === "all" || p.status === f)
+  });
 
   return (
     <div className="mt-4">
+      {/* Search + Filter */}
       <div className="flex gap-4 mb-4">
-        <SearchBar 
-          onSearch={setSearch} 
-          placeholder="Search projects..." 
-        />
-        <select 
-          className="p-2 border rounded"
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
+        <SearchBar onSearch={setT} placeholder="Search..." />
+        <select
+          className="p-2 bg-transparent border-2  border-red-900 rounded-full"
+          value={f}
+          onChange={e => setF(e.target.value)}
+          aria-label="Filter projects"   // accessibility fix
         >
-          <option value="all">All Statuses</option>
+          <option value="all">All</option>
           <option value="pending">Pending</option>
           <option value="in-progress">In Progress</option>
           <option value="completed">Completed</option>
         </select>
       </div>
-      
-      <div className="space-y-4">
-        {filteredProjects.map(p => {
-          const client = state.clients.find(c => c.id === p.clientId);
-          return (
-            <div key={p.id} className="p-4 bg-white shadow-lg rounded-lg">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-bold">{p.title}</h3>
-                  <p>Client: {client?.name || 'Unknown'}</p>
-                  <p>Status: {p.status}</p>
-                  <p>Budget: ${p.budget}</p>
-                  <p className={p.paymentStatus === 'paid' ? 'text-green-600' : 'text-red-600'}>
-                    {p.paymentStatus.toUpperCase()}
-                  </p>
-                </div>
-                {p.paymentStatus === "unpaid" && (
-                  <button 
-                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                    onClick={() => dispatch({ type: "MARK_PROJECT_PAID", payload: p.id })}
-                  >
-                    Mark Paid
-                  </button>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+
+      {/* Project list */}
+      {list.map(p => {
+        const c = state.clients.find(c => c.id === p.clientId)?.name || "Unknown";
+        return (
+          <div key={p.id} className="p-4  bg-blue-200 hover:bg-blue-100  shadow-lg rounded-lg mb-3">
+            <h3 className="font-bold text-red-800">{p.title}</h3>
+            <p>Client: {c}</p>
+            <p>Status: {p.status}</p>
+            <p>Budget: ${p.budget}</p>
+            <p className={p.paymentStatus === "paid" ? "text-green-600" : "text-red-600"}>
+              {p.paymentStatus}
+            </p>
+
+            {p.paymentStatus === "unpaid" && (
+              <button
+                className="bg-red-600 text-white px-3 py-1 rounded mt-2"
+                onClick={() => dispatch({ type: "MARK_PROJECT_PAID", payload: p.id })}
+              >
+                Paid
+              </button>
+            )}
+          </div>
+        )
+      })}
     </div>
-  );
+  )
 }
